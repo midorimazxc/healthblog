@@ -22,6 +22,8 @@ export interface Article {
 
 export const categories: Category[] = [
   "Тренировки",
+  "Похудение",
+  "Реабилитация",
   "Питание",
   "Восстановление",
   "Сон",
