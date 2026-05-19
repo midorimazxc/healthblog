@@ -13,6 +13,7 @@ import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as LibraryRouteImport } from './routes/library'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LibraryIndexRouteImport } from './routes/library.index'
+import { Route as LibraryArticlesRouteImport } from './routes/library.articles'
 import { Route as ArticleSlugRouteImport } from './routes/article.$slug'
 
 const ProfileRoute = ProfileRouteImport.update({
@@ -35,6 +36,11 @@ const LibraryIndexRoute = LibraryIndexRouteImport.update({
   path: '/',
   getParentRoute: () => LibraryRoute,
 } as any)
+const LibraryArticlesRoute = LibraryArticlesRouteImport.update({
+  id: '/articles',
+  path: '/articles',
+  getParentRoute: () => LibraryRoute,
+} as any)
 const ArticleSlugRoute = ArticleSlugRouteImport.update({
   id: '/article/$slug',
   path: '/article/$slug',
@@ -46,12 +52,14 @@ export interface FileRoutesByFullPath {
   '/library': typeof LibraryRouteWithChildren
   '/profile': typeof ProfileRoute
   '/article/$slug': typeof ArticleSlugRoute
+  '/library/articles': typeof LibraryArticlesRoute
   '/library/': typeof LibraryIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/profile': typeof ProfileRoute
   '/article/$slug': typeof ArticleSlugRoute
+  '/library/articles': typeof LibraryArticlesRoute
   '/library': typeof LibraryIndexRoute
 }
 export interface FileRoutesById {
@@ -60,19 +68,27 @@ export interface FileRoutesById {
   '/library': typeof LibraryRouteWithChildren
   '/profile': typeof ProfileRoute
   '/article/$slug': typeof ArticleSlugRoute
+  '/library/articles': typeof LibraryArticlesRoute
   '/library/': typeof LibraryIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/library' | '/profile' | '/article/$slug' | '/library/'
+  fullPaths:
+    | '/'
+    | '/library'
+    | '/profile'
+    | '/article/$slug'
+    | '/library/articles'
+    | '/library/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/profile' | '/article/$slug' | '/library'
+  to: '/' | '/profile' | '/article/$slug' | '/library/articles' | '/library'
   id:
     | '__root__'
     | '/'
     | '/library'
     | '/profile'
     | '/article/$slug'
+    | '/library/articles'
     | '/library/'
   fileRoutesById: FileRoutesById
 }
@@ -113,6 +129,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LibraryIndexRouteImport
       parentRoute: typeof LibraryRoute
     }
+    '/library/articles': {
+      id: '/library/articles'
+      path: '/articles'
+      fullPath: '/library/articles'
+      preLoaderRoute: typeof LibraryArticlesRouteImport
+      parentRoute: typeof LibraryRoute
+    }
     '/article/$slug': {
       id: '/article/$slug'
       path: '/article/$slug'
@@ -124,10 +147,12 @@ declare module '@tanstack/react-router' {
 }
 
 interface LibraryRouteChildren {
+  LibraryArticlesRoute: typeof LibraryArticlesRoute
   LibraryIndexRoute: typeof LibraryIndexRoute
 }
 
 const LibraryRouteChildren: LibraryRouteChildren = {
+  LibraryArticlesRoute: LibraryArticlesRoute,
   LibraryIndexRoute: LibraryIndexRoute,
 }
 
