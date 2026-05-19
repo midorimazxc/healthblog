@@ -9,7 +9,9 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as LibraryRouteImport } from './routes/library'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LibraryIndexRouteImport } from './routes/library.index'
@@ -17,9 +19,19 @@ import { Route as LibraryCoursesRouteImport } from './routes/library.courses'
 import { Route as LibraryArticlesRouteImport } from './routes/library.articles'
 import { Route as ArticleSlugRouteImport } from './routes/article.$slug'
 
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProfileRoute = ProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LibraryRoute = LibraryRouteImport.update({
@@ -56,7 +68,9 @@ const ArticleSlugRoute = ArticleSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/library': typeof LibraryRouteWithChildren
+  '/login': typeof LoginRoute
   '/profile': typeof ProfileRoute
+  '/register': typeof RegisterRoute
   '/article/$slug': typeof ArticleSlugRoute
   '/library/articles': typeof LibraryArticlesRoute
   '/library/courses': typeof LibraryCoursesRoute
@@ -64,7 +78,9 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
   '/profile': typeof ProfileRoute
+  '/register': typeof RegisterRoute
   '/article/$slug': typeof ArticleSlugRoute
   '/library/articles': typeof LibraryArticlesRoute
   '/library/courses': typeof LibraryCoursesRoute
@@ -74,7 +90,9 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/library': typeof LibraryRouteWithChildren
+  '/login': typeof LoginRoute
   '/profile': typeof ProfileRoute
+  '/register': typeof RegisterRoute
   '/article/$slug': typeof ArticleSlugRoute
   '/library/articles': typeof LibraryArticlesRoute
   '/library/courses': typeof LibraryCoursesRoute
@@ -85,7 +103,9 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/library'
+    | '/login'
     | '/profile'
+    | '/register'
     | '/article/$slug'
     | '/library/articles'
     | '/library/courses'
@@ -93,7 +113,9 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/login'
     | '/profile'
+    | '/register'
     | '/article/$slug'
     | '/library/articles'
     | '/library/courses'
@@ -102,7 +124,9 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/library'
+    | '/login'
     | '/profile'
+    | '/register'
     | '/article/$slug'
     | '/library/articles'
     | '/library/courses'
@@ -112,17 +136,33 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LibraryRoute: typeof LibraryRouteWithChildren
+  LoginRoute: typeof LoginRoute
   ProfileRoute: typeof ProfileRoute
+  RegisterRoute: typeof RegisterRoute
   ArticleSlugRoute: typeof ArticleSlugRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/profile': {
       id: '/profile'
       path: '/profile'
       fullPath: '/profile'
       preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/library': {
@@ -188,7 +228,9 @@ const LibraryRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LibraryRoute: LibraryRouteWithChildren,
+  LoginRoute: LoginRoute,
   ProfileRoute: ProfileRoute,
+  RegisterRoute: RegisterRoute,
   ArticleSlugRoute: ArticleSlugRoute,
 }
 export const routeTree = rootRouteImport

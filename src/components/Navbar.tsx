@@ -31,6 +31,20 @@ export function Navbar() {
               {l.label}
             </Link>
           ))}
+          <Link
+            to="/login"
+            activeProps={{ className: "bg-emerald-500/15 text-emerald-700" }}
+            inactiveProps={{ className: "text-slate-600 hover:text-slate-900 hover:bg-slate-900/5" }}
+            className="ml-1 rounded-full px-3 py-1.5 text-sm transition-colors sm:px-4"
+          >
+            Войти
+          </Link>
+          <Link
+            to="/register"
+            className="ml-1 rounded-full bg-[#22c55e] px-3 py-1.5 text-sm font-medium text-white ring-1 ring-[#16a34a] transition hover:bg-[#16a34a] sm:px-4"
+          >
+            Регистрация
+          </Link>
         </div>
       </nav>
     </header>
