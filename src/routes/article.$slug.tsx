@@ -82,14 +82,14 @@ function ArticlePage() {
       </div>
 
       <div className="glass rounded-[28px] p-8 sm:p-12 space-y-5">
-        {article.content.map((p, i) => (
+        {article.content.map((p: string, i: number) => (
           <p key={i} className="text-lg leading-relaxed text-white/90">
             {p}
           </p>
         ))}
 
         <div className="flex flex-wrap gap-2 pt-4">
-          {article.tags.map((tag) => (
+          {article.tags.map((tag: string) => (
             <span
               key={tag}
               className="rounded-full bg-white/10 px-3 py-1 text-xs text-white/85 ring-1 ring-white/15"
