@@ -29,7 +29,7 @@ function CategoriesPage() {
   return (
     <div className="space-y-10">
       <header className="glass-strong rounded-[28px] p-8 sm:p-10">
-        <h1 className="text-3xl sm:text-4xl font-semibold text-white">Категории</h1>
+        <h1 className="text-3xl sm:text-4xl font-semibold text-slate-900">Категории</h1>
         <p className="mt-2 text-on-glass">Выберите направление, которое сейчас важно для вас.</p>
       </header>
 
@@ -46,9 +46,9 @@ function CategoriesPage() {
               }`}
             >
               <div className={`grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br ${meta[c].gradient}`}>
-                <Icon className="h-5 w-5 text-white" />
+                <Icon className="h-5 w-5 text-slate-900" />
               </div>
-              <h3 className="mt-3 font-semibold text-white">{c}</h3>
+              <h3 className="mt-3 font-semibold text-slate-900">{c}</h3>
               <p className="mt-1 text-xs text-on-glass">{meta[c].desc}</p>
             </button>
           );
@@ -56,7 +56,7 @@ function CategoriesPage() {
       </div>
 
       <section>
-        <h2 className="mb-5 text-xl font-semibold text-white">
+        <h2 className="mb-5 text-xl font-semibold text-slate-900">
           {active} · {list.length}
         </h2>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

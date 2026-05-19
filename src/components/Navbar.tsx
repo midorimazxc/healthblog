@@ -11,7 +11,7 @@ export function Navbar() {
   return (
     <header className="sticky top-4 z-40 mx-auto w-full max-w-5xl px-4">
       <nav className="glass-strong flex items-center justify-between rounded-full px-5 py-3">
-        <Link to="/" className="flex items-center gap-2 text-white">
+        <Link to="/" className="flex items-center gap-2 text-slate-900">
           <span className="grid h-8 w-8 place-items-center rounded-full bg-[#22c55e]/30 ring-1 ring-[#22c55e]/50">
             <Leaf className="h-4 w-4 text-[#bbf7d0]" />
           </span>
@@ -23,8 +23,8 @@ export function Navbar() {
               key={l.to}
               to={l.to}
               activeOptions={{ exact: l.to === "/" }}
-              activeProps={{ className: "bg-white/15 text-white" }}
-              inactiveProps={{ className: "text-white/75 hover:text-white hover:bg-white/10" }}
+              activeProps={{ className: "bg-white/15 text-slate-900" }}
+              inactiveProps={{ className: "text-slate-600 hover:text-slate-900 hover:bg-white/10" }}
               className="rounded-full px-3 py-1.5 text-sm transition-colors sm:px-4"
             >
               {l.label}

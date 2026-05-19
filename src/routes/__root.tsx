@@ -16,8 +16,8 @@ function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center px-4">
       <div className="glass-strong max-w-md rounded-[28px] p-10 text-center">
-        <h1 className="text-7xl font-bold text-white">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-white">Страница не найдена</h2>
+        <h1 className="text-7xl font-bold text-slate-900">404</h1>
+        <h2 className="mt-4 text-xl font-semibold text-slate-900">Страница не найдена</h2>
         <p className="mt-2 text-sm text-on-glass">Возможно, она переехала или ещё не написана.</p>
         <Link to="/" className="btn-glass mt-6 inline-flex rounded-full px-5 py-2 text-sm">
           На главную
@@ -33,7 +33,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   return (
     <div className="flex min-h-screen items-center justify-center px-4">
       <div className="glass-strong max-w-md rounded-[28px] p-10 text-center">
-        <h1 className="text-xl font-semibold text-white">Что-то пошло не так</h1>
+        <h1 className="text-xl font-semibold text-slate-900">Что-то пошло не так</h1>
         <p className="mt-2 text-sm text-on-glass">Попробуйте обновить страницу.</p>
         <button
           onClick={() => { router.invalidate(); reset(); }}
@@ -92,7 +92,7 @@ function RootComponent() {
         <main className="mx-auto mt-8 w-full max-w-6xl px-4">
           <Outlet />
         </main>
-        <footer className="mx-auto mt-16 w-full max-w-6xl px-4 text-center text-xs text-white/50">
+        <footer className="mx-auto mt-16 w-full max-w-6xl px-4 text-center text-xs text-slate-400">
           © 2026 HealthBlog · Сделано с заботой о теле и уме
         </footer>
       </div>

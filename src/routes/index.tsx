@@ -40,10 +40,10 @@ function Home() {
         <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-[#22c55e]/30 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-32 -right-10 h-80 w-80 rounded-full bg-emerald-400/20 blur-3xl" />
         <div className="relative max-w-3xl">
-          <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs text-white/85 ring-1 ring-white/20">
+          <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs text-slate-700 ring-1 ring-white/20">
             <Dumbbell className="h-3.5 w-3.5 text-[#bbf7d0]" /> Новый сезон материалов
           </span>
-          <h1 className="mt-5 text-4xl sm:text-6xl font-semibold tracking-tight text-white leading-[1.05]">
+          <h1 className="mt-5 text-4xl sm:text-6xl font-semibold tracking-tight text-slate-900 leading-[1.05]">
             Здоровье, которое <span className="text-[#bbf7d0]">просвечивает</span> сквозь будни
           </h1>
           <p className="mt-5 max-w-xl text-base sm:text-lg text-on-glass">
@@ -54,7 +54,7 @@ function Home() {
             <Link to="/categories" className="btn-glass rounded-full px-5 py-2.5 text-sm font-medium inline-flex items-center gap-2">
               Категории <ArrowRight className="h-4 w-4" />
             </Link>
-            <a href="#articles" className="glass rounded-full px-5 py-2.5 text-sm text-white hover:bg-white/15 transition">
+            <a href="#articles" className="glass rounded-full px-5 py-2.5 text-sm text-slate-900 hover:bg-white/15 transition">
               Свежие статьи
             </a>
           </div>
@@ -65,7 +65,7 @@ function Home() {
       <section id="articles" className="space-y-5">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 className="text-2xl sm:text-3xl font-semibold text-white">Свежие статьи</h2>
+            <h2 className="text-2xl sm:text-3xl font-semibold text-slate-900">Свежие статьи</h2>
             <p className="text-sm text-on-glass">Найдено: {filtered.length}</p>
           </div>
           <div className="sm:w-96">
@@ -80,8 +80,8 @@ function Home() {
               onClick={() => setActive(cat)}
               className={`rounded-full px-4 py-1.5 text-sm transition-all ${
                 active === cat
-                  ? "bg-[#22c55e]/30 text-white ring-1 ring-[#22c55e]/50 shadow-[0_0_20px_rgba(34,197,94,0.3)]"
-                  : "glass text-white/80 hover:text-white"
+                  ? "bg-[#22c55e]/30 text-slate-900 ring-1 ring-[#22c55e]/50 shadow-[0_0_20px_rgba(34,197,94,0.3)]"
+                  : "glass text-slate-700 hover:text-slate-900"
               }`}
             >
               {cat}
