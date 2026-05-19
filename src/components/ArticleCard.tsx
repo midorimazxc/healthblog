@@ -16,7 +16,7 @@ export function ArticleCard({ article, index = 0 }: { article: Article; index?: 
         className={`mb-4 h-40 rounded-2xl bg-gradient-to-br ${article.gradient} relative overflow-hidden`}
       >
         <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-        <span className="absolute left-3 top-3 rounded-full bg-white/15 px-3 py-1 text-xs text-white backdrop-blur-md ring-1 ring-white/20">
+        <span className="absolute left-3 top-3 rounded-full bg-white/15 px-3 py-1 text-xs text-slate-900 backdrop-blur-md ring-1 ring-white/20">
           {article.category}
         </span>
       </div>
@@ -26,13 +26,13 @@ export function ArticleCard({ article, index = 0 }: { article: Article; index?: 
         params={{ slug: article.slug }}
         className="block"
       >
-        <h3 className="text-lg font-semibold text-white leading-snug group-hover:text-[#bbf7d0] transition-colors">
+        <h3 className="text-lg font-semibold text-slate-900 leading-snug group-hover:text-[#15803d] transition-colors">
           {article.title}
         </h3>
         <p className="mt-2 text-sm text-on-glass line-clamp-2">{article.excerpt}</p>
       </Link>
 
-      <div className="mt-4 flex items-center justify-between text-xs text-white/70">
+      <div className="mt-4 flex items-center justify-between text-xs text-slate-600">
         <span className="flex items-center gap-1.5">
           <Clock className="h-3.5 w-3.5" /> {article.readTime} мин
         </span>
@@ -44,8 +44,8 @@ export function ArticleCard({ article, index = 0 }: { article: Article; index?: 
           aria-label="Сохранить"
           className={`rounded-full p-1.5 transition-all ${
             saved
-              ? "bg-[#22c55e]/30 text-[#bbf7d0] ring-1 ring-[#22c55e]/50"
-              : "hover:bg-white/15 text-white/70"
+              ? "bg-[#22c55e]/30 text-[#15803d] ring-1 ring-[#22c55e]/50"
+              : "hover:bg-white/15 text-slate-600"
           }`}
         >
           <Bookmark className="h-4 w-4" fill={saved ? "currentColor" : "none"} />

@@ -43,15 +43,15 @@ function ProfilePage() {
         <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-[#22c55e]/30 blur-3xl" />
         <div className="relative flex items-start gap-5">
           <div className="grid h-16 w-16 place-items-center rounded-2xl bg-[#22c55e]/25 ring-1 ring-[#22c55e]/40">
-            <User className="h-7 w-7 text-[#bbf7d0]" />
+            <User className="h-7 w-7 text-[#15803d]" />
           </div>
           <div className="flex-1">
-            <h1 className="text-3xl font-semibold text-white">
+            <h1 className="text-3xl font-semibold text-slate-900">
               {name || "Ваш профиль"}
             </h1>
             <p className="mt-1 text-on-glass">
-              Цель: <span className="text-white">{goal}</span> · Активность:{" "}
-              <span className="text-white">{activity}</span>
+              Цель: <span className="text-slate-900">{goal}</span> · Активность:{" "}
+              <span className="text-slate-900">{activity}</span>
             </p>
           </div>
         </div>
@@ -59,19 +59,19 @@ function ProfilePage() {
 
       <section className="grid gap-6 lg:grid-cols-3">
         <div className="glass rounded-2xl p-6">
-          <label className="flex items-center gap-2 text-sm text-white/80">
+          <label className="flex items-center gap-2 text-sm text-slate-700">
             <User className="h-4 w-4" /> Имя
           </label>
           <input
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Алекс"
-            className="glass mt-3 w-full rounded-xl px-4 py-2.5 text-white placeholder:text-white/40 outline-none focus:ring-2 focus:ring-[#22c55e]/50"
+            className="glass mt-3 w-full rounded-xl px-4 py-2.5 text-slate-900 placeholder:text-slate-900/40 outline-none focus:ring-2 focus:ring-[#22c55e]/50"
           />
         </div>
 
         <div className="glass rounded-2xl p-6">
-          <label className="flex items-center gap-2 text-sm text-white/80">
+          <label className="flex items-center gap-2 text-sm text-slate-700">
             <Target className="h-4 w-4" /> Цель
           </label>
           <div className="mt-3 flex flex-wrap gap-2">
@@ -81,8 +81,8 @@ function ProfilePage() {
                 onClick={() => setGoal(g)}
                 className={`rounded-full px-3 py-1.5 text-xs transition ${
                   goal === g
-                    ? "bg-[#22c55e]/30 text-white ring-1 ring-[#22c55e]/50"
-                    : "bg-white/10 text-white/75 hover:bg-white/15"
+                    ? "bg-[#22c55e]/30 text-slate-900 ring-1 ring-[#22c55e]/50"
+                    : "bg-white/10 text-slate-600 hover:bg-white/15"
                 }`}
               >
                 {g}
@@ -92,7 +92,7 @@ function ProfilePage() {
         </div>
 
         <div className="glass rounded-2xl p-6">
-          <label className="flex items-center gap-2 text-sm text-white/80">
+          <label className="flex items-center gap-2 text-sm text-slate-700">
             <Activity className="h-4 w-4" /> Вид активности
           </label>
           <div className="mt-3 flex flex-wrap gap-2">
@@ -102,8 +102,8 @@ function ProfilePage() {
                 onClick={() => setActivity(a)}
                 className={`rounded-full px-3 py-1.5 text-xs transition ${
                   activity === a
-                    ? "bg-[#22c55e]/30 text-white ring-1 ring-[#22c55e]/50"
-                    : "bg-white/10 text-white/75 hover:bg-white/15"
+                    ? "bg-[#22c55e]/30 text-slate-900 ring-1 ring-[#22c55e]/50"
+                    : "bg-white/10 text-slate-600 hover:bg-white/15"
                 }`}
               >
                 {a}
@@ -114,9 +114,9 @@ function ProfilePage() {
       </section>
 
       <section>
-        <h2 className="mb-5 flex items-center gap-2 text-2xl font-semibold text-white">
-          <Bookmark className="h-5 w-5 text-[#bbf7d0]" /> Закладки
-          <span className="text-base font-normal text-white/60">· {saved.length}</span>
+        <h2 className="mb-5 flex items-center gap-2 text-2xl font-semibold text-slate-900">
+          <Bookmark className="h-5 w-5 text-[#15803d]" /> Закладки
+          <span className="text-base font-normal text-slate-900/60">· {saved.length}</span>
         </h2>
         {saved.length === 0 ? (
           <div className="glass rounded-2xl p-10 text-center text-on-glass">
