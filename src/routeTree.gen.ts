@@ -13,6 +13,7 @@ import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as LibraryRouteImport } from './routes/library'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LibraryIndexRouteImport } from './routes/library.index'
+import { Route as LibraryCoursesRouteImport } from './routes/library.courses'
 import { Route as LibraryArticlesRouteImport } from './routes/library.articles'
 import { Route as ArticleSlugRouteImport } from './routes/article.$slug'
 
@@ -36,6 +37,11 @@ const LibraryIndexRoute = LibraryIndexRouteImport.update({
   path: '/',
   getParentRoute: () => LibraryRoute,
 } as any)
+const LibraryCoursesRoute = LibraryCoursesRouteImport.update({
+  id: '/courses',
+  path: '/courses',
+  getParentRoute: () => LibraryRoute,
+} as any)
 const LibraryArticlesRoute = LibraryArticlesRouteImport.update({
   id: '/articles',
   path: '/articles',
@@ -53,6 +59,7 @@ export interface FileRoutesByFullPath {
   '/profile': typeof ProfileRoute
   '/article/$slug': typeof ArticleSlugRoute
   '/library/articles': typeof LibraryArticlesRoute
+  '/library/courses': typeof LibraryCoursesRoute
   '/library/': typeof LibraryIndexRoute
 }
 export interface FileRoutesByTo {
@@ -60,6 +67,7 @@ export interface FileRoutesByTo {
   '/profile': typeof ProfileRoute
   '/article/$slug': typeof ArticleSlugRoute
   '/library/articles': typeof LibraryArticlesRoute
+  '/library/courses': typeof LibraryCoursesRoute
   '/library': typeof LibraryIndexRoute
 }
 export interface FileRoutesById {
@@ -69,6 +77,7 @@ export interface FileRoutesById {
   '/profile': typeof ProfileRoute
   '/article/$slug': typeof ArticleSlugRoute
   '/library/articles': typeof LibraryArticlesRoute
+  '/library/courses': typeof LibraryCoursesRoute
   '/library/': typeof LibraryIndexRoute
 }
 export interface FileRouteTypes {
@@ -79,9 +88,16 @@ export interface FileRouteTypes {
     | '/profile'
     | '/article/$slug'
     | '/library/articles'
+    | '/library/courses'
     | '/library/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/profile' | '/article/$slug' | '/library/articles' | '/library'
+  to:
+    | '/'
+    | '/profile'
+    | '/article/$slug'
+    | '/library/articles'
+    | '/library/courses'
+    | '/library'
   id:
     | '__root__'
     | '/'
@@ -89,6 +105,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/article/$slug'
     | '/library/articles'
+    | '/library/courses'
     | '/library/'
   fileRoutesById: FileRoutesById
 }
@@ -129,6 +146,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LibraryIndexRouteImport
       parentRoute: typeof LibraryRoute
     }
+    '/library/courses': {
+      id: '/library/courses'
+      path: '/courses'
+      fullPath: '/library/courses'
+      preLoaderRoute: typeof LibraryCoursesRouteImport
+      parentRoute: typeof LibraryRoute
+    }
     '/library/articles': {
       id: '/library/articles'
       path: '/articles'
@@ -148,11 +172,13 @@ declare module '@tanstack/react-router' {
 
 interface LibraryRouteChildren {
   LibraryArticlesRoute: typeof LibraryArticlesRoute
+  LibraryCoursesRoute: typeof LibraryCoursesRoute
   LibraryIndexRoute: typeof LibraryIndexRoute
 }
 
 const LibraryRouteChildren: LibraryRouteChildren = {
   LibraryArticlesRoute: LibraryArticlesRoute,
+  LibraryCoursesRoute: LibraryCoursesRoute,
   LibraryIndexRoute: LibraryIndexRoute,
 }
 
