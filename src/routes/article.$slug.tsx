@@ -43,7 +43,7 @@ function ArticlePage() {
 
       <header className="glass-strong rounded-[28px] p-8 sm:p-12">
         <div className="flex flex-wrap items-center gap-2 text-xs">
-          <span className="rounded-full bg-[#22c55e]/25 px-3 py-1 text-[#bbf7d0] ring-1 ring-[#22c55e]/40">
+          <span className="rounded-full bg-[#22c55e]/25 px-3 py-1 text-[#15803d] ring-1 ring-[#22c55e]/40">
             {article.category}
           </span>
           <span className="flex items-center gap-1 text-slate-600">
@@ -62,7 +62,7 @@ function ArticlePage() {
             <button
               onClick={() => toggle(article.slug)}
               className={`glass rounded-full p-2.5 transition ${
-                saved ? "bg-[#22c55e]/25 ring-1 ring-[#22c55e]/40 text-[#bbf7d0]" : "text-slate-700"
+                saved ? "bg-[#22c55e]/25 ring-1 ring-[#22c55e]/40 text-[#15803d]" : "text-slate-700"
               }`}
               aria-label="Сохранить"
             >

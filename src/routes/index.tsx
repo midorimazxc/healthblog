@@ -41,10 +41,10 @@ function Home() {
         <div className="pointer-events-none absolute -bottom-32 -right-10 h-80 w-80 rounded-full bg-emerald-400/20 blur-3xl" />
         <div className="relative max-w-3xl">
           <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs text-slate-700 ring-1 ring-white/20">
-            <Dumbbell className="h-3.5 w-3.5 text-[#bbf7d0]" /> Новый сезон материалов
+            <Dumbbell className="h-3.5 w-3.5 text-[#15803d]" /> Новый сезон материалов
           </span>
           <h1 className="mt-5 text-4xl sm:text-6xl font-semibold tracking-tight text-slate-900 leading-[1.05]">
-            Здоровье, которое <span className="text-[#bbf7d0]">просвечивает</span> сквозь будни
+            Здоровье, которое <span className="text-[#15803d]">просвечивает</span> сквозь будни
           </h1>
           <p className="mt-5 max-w-xl text-base sm:text-lg text-on-glass">
             Понятные материалы о тренировках, питании, сне и восстановлении.

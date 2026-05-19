@@ -26,7 +26,7 @@ export function ArticleCard({ article, index = 0 }: { article: Article; index?: 
         params={{ slug: article.slug }}
         className="block"
       >
-        <h3 className="text-lg font-semibold text-slate-900 leading-snug group-hover:text-[#bbf7d0] transition-colors">
+        <h3 className="text-lg font-semibold text-slate-900 leading-snug group-hover:text-[#15803d] transition-colors">
           {article.title}
         </h3>
         <p className="mt-2 text-sm text-on-glass line-clamp-2">{article.excerpt}</p>
@@ -44,7 +44,7 @@ export function ArticleCard({ article, index = 0 }: { article: Article; index?: 
           aria-label="Сохранить"
           className={`rounded-full p-1.5 transition-all ${
             saved
-              ? "bg-[#22c55e]/30 text-[#bbf7d0] ring-1 ring-[#22c55e]/50"
+              ? "bg-[#22c55e]/30 text-[#15803d] ring-1 ring-[#22c55e]/50"
               : "hover:bg-white/15 text-slate-600"
           }`}
         >

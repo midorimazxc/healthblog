@@ -10,7 +10,7 @@ export function Newsletter() {
       <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[#22c55e]/30 blur-3xl" />
       <div className="relative max-w-2xl">
         <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs text-slate-700 ring-1 ring-white/20">
-          <Sparkles className="h-3.5 w-3.5 text-[#bbf7d0]" /> Раз в неделю, без спама
+          <Sparkles className="h-3.5 w-3.5 text-[#15803d]" /> Раз в неделю, без спама
         </div>
         <h2 className="text-2xl sm:text-3xl font-semibold text-slate-900">
           Подписка на короткий дайджест о здоровье

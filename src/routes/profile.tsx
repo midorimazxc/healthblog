@@ -43,7 +43,7 @@ function ProfilePage() {
         <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-[#22c55e]/30 blur-3xl" />
         <div className="relative flex items-start gap-5">
           <div className="grid h-16 w-16 place-items-center rounded-2xl bg-[#22c55e]/25 ring-1 ring-[#22c55e]/40">
-            <User className="h-7 w-7 text-[#bbf7d0]" />
+            <User className="h-7 w-7 text-[#15803d]" />
           </div>
           <div className="flex-1">
             <h1 className="text-3xl font-semibold text-slate-900">
@@ -115,7 +115,7 @@ function ProfilePage() {
 
       <section>
         <h2 className="mb-5 flex items-center gap-2 text-2xl font-semibold text-slate-900">
-          <Bookmark className="h-5 w-5 text-[#bbf7d0]" /> Закладки
+          <Bookmark className="h-5 w-5 text-[#15803d]" /> Закладки
           <span className="text-base font-normal text-slate-900/60">· {saved.length}</span>
         </h2>
         {saved.length === 0 ? (
