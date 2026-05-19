@@ -10,8 +10,11 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ProfileRouteImport } from './routes/profile'
-import { Route as CategoriesRouteImport } from './routes/categories'
+import { Route as LibraryRouteImport } from './routes/library'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LibraryIndexRouteImport } from './routes/library.index'
+import { Route as LibraryCoursesRouteImport } from './routes/library.courses'
+import { Route as LibraryArticlesRouteImport } from './routes/library.articles'
 import { Route as ArticleSlugRouteImport } from './routes/article.$slug'
 
 const ProfileRoute = ProfileRouteImport.update({
@@ -19,15 +22,30 @@ const ProfileRoute = ProfileRouteImport.update({
   path: '/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CategoriesRoute = CategoriesRouteImport.update({
-  id: '/categories',
-  path: '/categories',
+const LibraryRoute = LibraryRouteImport.update({
+  id: '/library',
+  path: '/library',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const LibraryIndexRoute = LibraryIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => LibraryRoute,
+} as any)
+const LibraryCoursesRoute = LibraryCoursesRouteImport.update({
+  id: '/courses',
+  path: '/courses',
+  getParentRoute: () => LibraryRoute,
+} as any)
+const LibraryArticlesRoute = LibraryArticlesRouteImport.update({
+  id: '/articles',
+  path: '/articles',
+  getParentRoute: () => LibraryRoute,
 } as any)
 const ArticleSlugRoute = ArticleSlugRouteImport.update({
   id: '/article/$slug',
@@ -37,34 +55,63 @@ const ArticleSlugRoute = ArticleSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/categories': typeof CategoriesRoute
+  '/library': typeof LibraryRouteWithChildren
   '/profile': typeof ProfileRoute
   '/article/$slug': typeof ArticleSlugRoute
+  '/library/articles': typeof LibraryArticlesRoute
+  '/library/courses': typeof LibraryCoursesRoute
+  '/library/': typeof LibraryIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/categories': typeof CategoriesRoute
   '/profile': typeof ProfileRoute
   '/article/$slug': typeof ArticleSlugRoute
+  '/library/articles': typeof LibraryArticlesRoute
+  '/library/courses': typeof LibraryCoursesRoute
+  '/library': typeof LibraryIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/categories': typeof CategoriesRoute
+  '/library': typeof LibraryRouteWithChildren
   '/profile': typeof ProfileRoute
   '/article/$slug': typeof ArticleSlugRoute
+  '/library/articles': typeof LibraryArticlesRoute
+  '/library/courses': typeof LibraryCoursesRoute
+  '/library/': typeof LibraryIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/categories' | '/profile' | '/article/$slug'
+  fullPaths:
+    | '/'
+    | '/library'
+    | '/profile'
+    | '/article/$slug'
+    | '/library/articles'
+    | '/library/courses'
+    | '/library/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/categories' | '/profile' | '/article/$slug'
-  id: '__root__' | '/' | '/categories' | '/profile' | '/article/$slug'
+  to:
+    | '/'
+    | '/profile'
+    | '/article/$slug'
+    | '/library/articles'
+    | '/library/courses'
+    | '/library'
+  id:
+    | '__root__'
+    | '/'
+    | '/library'
+    | '/profile'
+    | '/article/$slug'
+    | '/library/articles'
+    | '/library/courses'
+    | '/library/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  CategoriesRoute: typeof CategoriesRoute
+  LibraryRoute: typeof LibraryRouteWithChildren
   ProfileRoute: typeof ProfileRoute
   ArticleSlugRoute: typeof ArticleSlugRoute
 }
@@ -78,11 +125,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/categories': {
-      id: '/categories'
-      path: '/categories'
-      fullPath: '/categories'
-      preLoaderRoute: typeof CategoriesRouteImport
+    '/library': {
+      id: '/library'
+      path: '/library'
+      fullPath: '/library'
+      preLoaderRoute: typeof LibraryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -91,6 +138,27 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/library/': {
+      id: '/library/'
+      path: '/'
+      fullPath: '/library/'
+      preLoaderRoute: typeof LibraryIndexRouteImport
+      parentRoute: typeof LibraryRoute
+    }
+    '/library/courses': {
+      id: '/library/courses'
+      path: '/courses'
+      fullPath: '/library/courses'
+      preLoaderRoute: typeof LibraryCoursesRouteImport
+      parentRoute: typeof LibraryRoute
+    }
+    '/library/articles': {
+      id: '/library/articles'
+      path: '/articles'
+      fullPath: '/library/articles'
+      preLoaderRoute: typeof LibraryArticlesRouteImport
+      parentRoute: typeof LibraryRoute
     }
     '/article/$slug': {
       id: '/article/$slug'
@@ -102,9 +170,24 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface LibraryRouteChildren {
+  LibraryArticlesRoute: typeof LibraryArticlesRoute
+  LibraryCoursesRoute: typeof LibraryCoursesRoute
+  LibraryIndexRoute: typeof LibraryIndexRoute
+}
+
+const LibraryRouteChildren: LibraryRouteChildren = {
+  LibraryArticlesRoute: LibraryArticlesRoute,
+  LibraryCoursesRoute: LibraryCoursesRoute,
+  LibraryIndexRoute: LibraryIndexRoute,
+}
+
+const LibraryRouteWithChildren =
+  LibraryRoute._addFileChildren(LibraryRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  CategoriesRoute: CategoriesRoute,
+  LibraryRoute: LibraryRouteWithChildren,
   ProfileRoute: ProfileRoute,
   ArticleSlugRoute: ArticleSlugRoute,
 }

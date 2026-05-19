@@ -3,7 +3,8 @@ import { Leaf } from "lucide-react";
 
 const links = [
   { to: "/", label: "Главная" },
-  { to: "/categories", label: "Категории" },
+  { to: "/library/articles", label: "Статьи" },
+  { to: "/library/courses", label: "Курсы" },
   { to: "/profile", label: "Профиль" },
 ] as const;
 
