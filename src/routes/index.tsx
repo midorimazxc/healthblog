@@ -51,12 +51,12 @@ function Home() {
             Никаких быстрых решений — только то, что работает в долгую.
           </p>
           <div className="mt-7 flex flex-wrap gap-3">
-            <Link to="/categories" className="btn-glass rounded-full px-5 py-2.5 text-sm font-medium inline-flex items-center gap-2">
-              Категории <ArrowRight className="h-4 w-4" />
+            <Link to="/library/articles" className="btn-glass rounded-full px-5 py-2.5 text-sm font-medium inline-flex items-center gap-2">
+              Статьи <ArrowRight className="h-4 w-4" />
             </Link>
-            <a href="#articles" className="glass rounded-full px-5 py-2.5 text-sm text-slate-900 hover:bg-white/15 transition">
-              Свежие статьи
-            </a>
+            <Link to="/library/courses" className="glass rounded-full px-5 py-2.5 text-sm text-slate-900 hover:bg-white/15 transition">
+              Курсы
+            </Link>
           </div>
         </div>
       </section>
