@@ -1,6 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { ArrowLeft, Bookmark, Clock, Share2 } from "lucide-react";
-import { getArticleBySlug, getRelated } from "@/lib/articles";
+import { fetchArticleBySlug, fetchRelatedArticles, type Article } from "@/lib/articles";
 import { ArticleCard } from "@/components/ArticleCard";
 import { useBookmarks } from "@/lib/bookmarks";
 
@@ -14,8 +15,8 @@ export const Route = createFileRoute("/article/$slug")({
       </Link>
     </div>
   ),
-  loader: ({ params }) => {
-    const article = getArticleBySlug(params.slug);
+  loader: async ({ params }) => {
+    const article = await fetchArticleBySlug(params.slug);
     if (!article) throw notFound();
     return { article };
   },
@@ -31,9 +32,13 @@ export const Route = createFileRoute("/article/$slug")({
 
 function ArticlePage() {
   const { article } = Route.useLoaderData();
-  const related = getRelated(article.slug);
+  const [related, setRelated] = useState<Article[]>([]);
   const { has, toggle } = useBookmarks();
   const saved = has(article.slug);
+
+  useEffect(() => {
+    fetchRelatedArticles(article.slug).then(setRelated);
+  }, [article.slug]);
 
   return (
     <article className="space-y-10">
@@ -82,14 +87,14 @@ function ArticlePage() {
       </div>
 
       <div className="glass rounded-[28px] p-8 sm:p-12 space-y-5">
-        {article.content.map((p: string, i: number) => (
+        {article.content.map((p, i) => (
           <p key={i} className="text-lg leading-relaxed text-slate-800">
             {p}
           </p>
         ))}
 
         <div className="flex flex-wrap gap-2 pt-4">
-          {article.tags.map((tag: string) => (
+          {article.tags.map((tag) => (
             <span
               key={tag}
               className="rounded-full bg-white/10 px-3 py-1 text-xs text-slate-700 ring-1 ring-white/15"

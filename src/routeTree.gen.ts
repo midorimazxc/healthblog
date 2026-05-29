@@ -17,6 +17,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as LibraryIndexRouteImport } from './routes/library.index'
 import { Route as LibraryCoursesRouteImport } from './routes/library.courses'
 import { Route as LibraryArticlesRouteImport } from './routes/library.articles'
+import { Route as CourseSlugRouteImport } from './routes/course.$slug'
 import { Route as ArticleSlugRouteImport } from './routes/article.$slug'
 
 const RegisterRoute = RegisterRouteImport.update({
@@ -59,6 +60,11 @@ const LibraryArticlesRoute = LibraryArticlesRouteImport.update({
   path: '/articles',
   getParentRoute: () => LibraryRoute,
 } as any)
+const CourseSlugRoute = CourseSlugRouteImport.update({
+  id: '/course/$slug',
+  path: '/course/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ArticleSlugRoute = ArticleSlugRouteImport.update({
   id: '/article/$slug',
   path: '/article/$slug',
@@ -72,6 +78,7 @@ export interface FileRoutesByFullPath {
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
   '/article/$slug': typeof ArticleSlugRoute
+  '/course/$slug': typeof CourseSlugRoute
   '/library/articles': typeof LibraryArticlesRoute
   '/library/courses': typeof LibraryCoursesRoute
   '/library/': typeof LibraryIndexRoute
@@ -82,6 +89,7 @@ export interface FileRoutesByTo {
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
   '/article/$slug': typeof ArticleSlugRoute
+  '/course/$slug': typeof CourseSlugRoute
   '/library/articles': typeof LibraryArticlesRoute
   '/library/courses': typeof LibraryCoursesRoute
   '/library': typeof LibraryIndexRoute
@@ -94,6 +102,7 @@ export interface FileRoutesById {
   '/profile': typeof ProfileRoute
   '/register': typeof RegisterRoute
   '/article/$slug': typeof ArticleSlugRoute
+  '/course/$slug': typeof CourseSlugRoute
   '/library/articles': typeof LibraryArticlesRoute
   '/library/courses': typeof LibraryCoursesRoute
   '/library/': typeof LibraryIndexRoute
@@ -107,6 +116,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/register'
     | '/article/$slug'
+    | '/course/$slug'
     | '/library/articles'
     | '/library/courses'
     | '/library/'
@@ -117,6 +127,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/register'
     | '/article/$slug'
+    | '/course/$slug'
     | '/library/articles'
     | '/library/courses'
     | '/library'
@@ -128,6 +139,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/register'
     | '/article/$slug'
+    | '/course/$slug'
     | '/library/articles'
     | '/library/courses'
     | '/library/'
@@ -140,6 +152,7 @@ export interface RootRouteChildren {
   ProfileRoute: typeof ProfileRoute
   RegisterRoute: typeof RegisterRoute
   ArticleSlugRoute: typeof ArticleSlugRoute
+  CourseSlugRoute: typeof CourseSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -200,6 +213,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LibraryArticlesRouteImport
       parentRoute: typeof LibraryRoute
     }
+    '/course/$slug': {
+      id: '/course/$slug'
+      path: '/course/$slug'
+      fullPath: '/course/$slug'
+      preLoaderRoute: typeof CourseSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/article/$slug': {
       id: '/article/$slug'
       path: '/article/$slug'
@@ -232,7 +252,18 @@ const rootRouteChildren: RootRouteChildren = {
   ProfileRoute: ProfileRoute,
   RegisterRoute: RegisterRoute,
   ArticleSlugRoute: ArticleSlugRoute,
+  CourseSlugRoute: CourseSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

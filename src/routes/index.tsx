@@ -1,12 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ArrowRight, Dumbbell } from "lucide-react";
-import { articles, categories } from "@/lib/articles";
+import { fetchArticles, fetchCategories, type Article } from "@/lib/articles";
 import { ArticleCard } from "@/components/ArticleCard";
 import { SearchBar } from "@/components/SearchBar";
 import { Newsletter } from "@/components/Newsletter";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/")(({
   head: () => ({
     meta: [
       { title: "HealthBlog — здоровый образ жизни и тренировки" },
@@ -14,11 +14,22 @@ export const Route = createFileRoute("/")({
     ],
   }),
   component: Home,
-});
+}));
 
 function Home() {
   const [query, setQuery] = useState("");
-  const [active, setActive] = useState<string>("Все");
+  const [active, setActive] = useState("Все");
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    Promise.all([fetchArticles(), fetchCategories()]).then(([arts, cats]) => {
+      setArticles(arts);
+      setCategories(cats);
+      setLoading(false);
+    });
+  }, []);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -31,7 +42,7 @@ function Home() {
       const matchesCat = active === "Все" || a.category === active;
       return matchesQ && matchesCat;
     });
-  }, [query, active]);
+  }, [query, active, articles]);
 
   return (
     <div className="space-y-14">
@@ -74,7 +85,7 @@ function Home() {
         </div>
 
         <div className="flex flex-wrap gap-2">
-          {(["Все", ...categories] as const).map((cat) => (
+          {(["Все", ...categories]).map((cat) => (
             <button
               key={cat}
               onClick={() => setActive(cat)}
@@ -89,7 +100,13 @@ function Home() {
           ))}
         </div>
 
-        {filtered.length === 0 ? (
+        {loading ? (
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="glass rounded-[20px] h-64 animate-pulse" />
+            ))}
+          </div>
+        ) : filtered.length === 0 ? (
           <div className="glass rounded-2xl p-10 text-center text-on-glass">
             Ничего не найдено. Попробуйте другой запрос.
           </div>

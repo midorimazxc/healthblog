@@ -1,3 +1,5 @@
+import { supabase } from "./supabase";
+
 export type Category =
   | "Тренировки"
   | "Похудение"
@@ -30,226 +32,150 @@ export const categories: Category[] = [
   "Ментальное",
 ];
 
-export const articles: Article[] = [
-  {
-    slug: "full-body-strength",
-    title: "Full Body Strength: 5 движений на каждый день",
-    excerpt: "Простая программа на всё тело, которую можно делать без зала — 25 минут до завтрака.",
-    category: "Тренировки",
-    readTime: 6,
-    author: "Анна Кравец",
-    date: "12 мая 2026",
-    tags: ["сила", "дом", "новичкам"],
-    gradient: "from-emerald-400/40 to-teal-600/40",
-    content: [
-      "Сила — это привычка, а не подвиг. Если выделить 25 минут утром, тело отвечает быстрее, чем мы думаем.",
-      "Программа строится вокруг пяти базовых паттернов: приседание, тяга, жим, шарнир бедра и стабилизация корпуса. Каждый паттерн — 3 подхода по 8–12 повторений.",
-      "Главное правило — техника важнее веса. Замедлите фазу опускания до трёх секунд, и обычное приседание превратится в серьёзный стимул для роста.",
-      "Через две недели добавьте паузу в нижней точке. Через месяц — лёгкое утяжеление: рюкзак с книгами или бутылки с водой.",
-    ],
-  },
-  {
-    slug: "protein-myths",
-    title: "Сколько белка вам реально нужно",
-    excerpt: "Разбираем мифы о 2г/кг и объясняем, почему контекст важнее цифры.",
-    category: "Питание",
-    readTime: 8,
-    author: "Дмитрий Лосев",
-    date: "8 мая 2026",
-    tags: ["белок", "макросы", "наука"],
-    gradient: "from-lime-400/40 to-green-600/40",
-    content: [
-      "Цифра 2 грамма белка на килограмм веса стала почти религией. Но исследования последних лет показывают: для большинства людей хватает 1.4–1.8 г/кг.",
-      "Ключевой фактор — распределение по дню. Четыре приёма по 25–35 г работают лучше, чем один большой ужин.",
-      "Растительный белок не уступает животному, если суммарно набирается норма аминокислот. Смесь бобовых и злаков закрывает аминокислотный профиль.",
-    ],
-  },
-  {
-    slug: "recovery-cold",
-    title: "Холод после тренировки: помощь или вред",
-    excerpt: "Ледяные ванны стали трендом, но что говорит наука о росте мышц после ледяного душа?",
-    category: "Восстановление",
-    readTime: 5,
-    author: "Мария Орлова",
-    date: "3 мая 2026",
-    tags: ["холод", "восстановление", "гипертрофия"],
-    gradient: "from-cyan-400/40 to-emerald-600/40",
-    content: [
-      "Холод снижает воспаление — но именно воспаление запускает синтез белка после силовой тренировки.",
-      "Если ваша цель — рост мышц, отложите ледяную ванну минимум на 6 часов после зала.",
-      "А вот после интенсивного бега или игровых видов спорта холод действительно ускоряет возвращение в строй.",
-    ],
-  },
-  {
-    slug: "sleep-architecture",
-    title: "Архитектура сна: 4 цикла, которые меняют всё",
-    excerpt: "Почему 7.5 часов лучше 8, и как выровнять циркадные ритмы за две недели.",
-    category: "Сон",
-    readTime: 7,
-    author: "Игорь Васин",
-    date: "28 апреля 2026",
-    tags: ["сон", "циркадные ритмы", "восстановление"],
-    gradient: "from-teal-400/40 to-emerald-700/40",
-    content: [
-      "Сон состоит из 90-минутных циклов. Просыпание в конце цикла даёт ощущение бодрости, а в середине — разбитости.",
-      "Самое мощное вмешательство — это утренний свет. 10 минут на улице сразу после пробуждения перенастраивают мелатониновый ритм.",
-      "Кофе после 14:00 — главный скрытый враг глубокого сна, даже если вы 'нормально засыпаете'.",
-    ],
-  },
-  {
-    slug: "mindful-breath",
-    title: "Дыхание 4-7-8: антистресс за 90 секунд",
-    excerpt: "Техника, которая включает парасимпатику быстрее, чем любая медитация.",
-    category: "Ментальное",
-    readTime: 4,
-    author: "Софья Тренева",
-    date: "22 апреля 2026",
-    tags: ["дыхание", "стресс", "осознанность"],
-    gradient: "from-emerald-300/40 to-green-700/40",
-    content: [
-      "Вдох на 4 счёта, задержка на 7, выдох на 8. Длинный выдох — сигнал телу, что опасности нет.",
-      "Четыре цикла подряд снижают пульс в среднем на 8 ударов. Это измерено в десятках исследований.",
-      "Делайте это перед сложным разговором, перед сном или сразу после пробуждения.",
-    ],
-  },
-  {
-    slug: "zone-2-cardio",
-    title: "Zone 2: скучное кардио, которое меняет митохондрии",
-    excerpt: "Почему медленный бег эффективнее интервалов, если у вас в запасе годы.",
-    category: "Тренировки",
-    readTime: 9,
-    author: "Анна Кравец",
-    date: "18 апреля 2026",
-    tags: ["кардио", "выносливость", "митохондрии"],
-    gradient: "from-green-400/40 to-emerald-700/40",
-    content: [
-      "Zone 2 — это интенсивность, при которой вы можете говорить полными предложениями, но петь уже сложно.",
-      "180 минут в неделю в этой зоне дают рост митохондриальной плотности, недостижимый интервалами.",
-      "Это медленно, скучно и почти всегда работает. Терпение — главный навык выносливости.",
-    ],
-  },
-  {
-    slug: "carbs-timing",
-    title: "Углеводы вокруг тренировки: что и когда",
-    excerpt: "Простые правила, которые поднимают производительность без сложных схем.",
-    category: "Питание",
-    readTime: 6,
-    author: "Дмитрий Лосев",
-    date: "14 апреля 2026",
-    tags: ["углеводы", "энергия", "тренировки"],
-    gradient: "from-yellow-400/30 to-emerald-600/40",
-    content: [
-      "Перед тренировкой — быстрые углеводы за 30–60 минут. Банан, рис, овсянка.",
-      "После — комбинация белка и углеводов в соотношении 1:2 в течение часа.",
-      "В дни отдыха углеводы можно смело снижать — тело не требует топлива впрок.",
-    ],
-  },
-  {
-    slug: "mobility-daily",
-    title: "10 минут мобилити каждое утро",
-    excerpt: "Короткая последовательность, которая раскрывает грудной отдел и бёдра.",
-    category: "Восстановление",
-    readTime: 5,
-    author: "Мария Орлова",
-    date: "10 апреля 2026",
-    tags: ["мобилити", "осанка", "утро"],
-    gradient: "from-emerald-400/40 to-cyan-600/40",
-    content: [
-      "Мобилити — это контроль в крайних диапазонах. Не растяжка, а активная работа.",
-      "Последовательность: world's greatest stretch, кошка-корова, открытие грудного, 90/90.",
-      "Делайте каждое движение по 30 секунд на сторону. Десять минут — и день начинается иначе.",
-    ],
-  },
-  {
-    slug: "stress-resilience",
-    title: "Психологическая устойчивость: 3 практики",
-    excerpt: "Не борьба со стрессом, а тренировка способности оставаться собой под нагрузкой.",
-    category: "Ментальное",
-    readTime: 7,
-    author: "Софья Тренева",
-    date: "5 апреля 2026",
-    tags: ["устойчивость", "практики", "психология"],
-    gradient: "from-teal-300/40 to-green-600/40",
-    content: [
-      "Утренняя страница — три минуты письма от руки. Сливаете шум, освобождаете внимание.",
-      "Дневной чек-ин — пять глубоких вдохов в полдень. Возвращает к телу.",
-      "Вечерняя благодарность — три конкретных события дня. Меняет фокус нервной системы.",
-    ],
-  },
-  {
-    slug: "fat-loss-deficit",
-    title: "Дефицит калорий без срывов: реальный план",
-    excerpt: "Как создать умеренный дефицит и сохранить мышцы, не превращая жизнь в подсчёт калорий.",
-    category: "Похудение",
-    readTime: 8,
-    author: "Дмитрий Лосев",
-    date: "16 мая 2026",
-    tags: ["дефицит", "жиросжигание", "привычки"],
-    gradient: "from-emerald-400/40 to-lime-600/40",
-    content: [
-      "Дефицит 10–20% от поддерживающей калорийности — золотая середина. Меньше теряешь мышц, проще держать.",
-      "Белок 1.8 г/кг, овощи в каждый приём, шаги 8–10к в день — это три рычага, которые решают почти всё.",
-      "Раз в 7–10 дней — рефид: один день на поддерживающей. Психика и гормоны скажут спасибо.",
-    ],
-  },
-  {
-    slug: "walking-weight-loss",
-    title: "Почему ходьба бьёт кардио в зале",
-    excerpt: "Низкоинтенсивная активность — самый недооценённый инструмент для снижения веса.",
-    category: "Похудение",
-    readTime: 5,
-    author: "Анна Кравец",
-    date: "11 мая 2026",
-    tags: ["ходьба", "NEAT", "жиросжигание"],
-    gradient: "from-lime-400/40 to-emerald-600/40",
-    content: [
-      "10 000 шагов сжигают столько же, сколько 40 минут на эллипсе — но не повышают аппетит.",
-      "NEAT (бытовая активность) у худеющих падает на 30%. Сознательная ходьба компенсирует.",
-      "Прогулка после еды снижает скачки сахара на 30%. Бонус — улучшение сна.",
-    ],
-  },
-  {
-    slug: "rehab-knee",
-    title: "Реабилитация колена: 4 фазы возвращения",
-    excerpt: "От снятия отёка до полной нагрузки — пошаговый протокол после травмы.",
-    category: "Реабилитация",
-    readTime: 9,
-    author: "Мария Орлова",
-    date: "9 мая 2026",
-    tags: ["колено", "травма", "протокол"],
-    gradient: "from-cyan-400/40 to-teal-600/40",
-    content: [
-      "Фаза 1 — покой, лёд, компрессия, возвышение. Первые 72 часа решают многое.",
-      "Фаза 2 — изометрия и мобилизация. Включаем квадрицепс без боли.",
-      "Фаза 3 — полный диапазон и силовые с лёгким весом. Фаза 4 — плиометрика и возврат в спорт.",
-    ],
-  },
-  {
-    slug: "rehab-lower-back",
-    title: "Поясница: что делать, когда 'прострелило'",
-    excerpt: "Современный взгляд: движение лечит лучше постельного режима.",
-    category: "Реабилитация",
-    readTime: 7,
-    author: "Игорь Васин",
-    date: "1 мая 2026",
-    tags: ["поясница", "боль", "движение"],
-    gradient: "from-teal-400/40 to-emerald-600/40",
-    content: [
-      "85% эпизодов боли в пояснице — неспецифические. Это не значит 'ничего', это значит 'не страшно'.",
-      "Лежать дольше двух дней — хуже, чем двигаться. Ходьба и мягкая мобилизация ускоряют выход.",
-      "McKenzie-разгибания и кошка-корова — стартовый набор. Если боль уходит вниз по ноге — к врачу.",
-    ],
-  },
-];
+// ─── Fetch from Supabase ──────────────────────────────────────
 
-export function getArticleBySlug(slug: string) {
-  return articles.find((a) => a.slug === slug);
+export async function fetchArticles(): Promise<Article[]> {
+  if (!supabase) return [];
+
+  const { data, error } = await supabase
+    .from("articles")
+    .select(`
+      slug,
+      title,
+      excerpt,
+      read_time,
+      gradient,
+      published_at,
+      article_categories ( name ),
+      authors ( name ),
+      article_paragraphs ( position, body ),
+      article_tags (
+        tags ( name )
+      )
+    `)
+    .order("published_at", { ascending: false });
+
+  if (error || !data) {
+    console.error("fetchArticles error:", error);
+    return [];
+  }
+
+  return data.map((row: any) => ({
+    slug:     row.slug,
+    title:    row.title,
+    excerpt:  row.excerpt,
+    category: row.article_categories?.name as Category,
+    readTime: row.read_time,
+    author:   row.authors?.name ?? "",
+    date:     formatDate(row.published_at),
+    gradient: row.gradient ?? "from-emerald-400/40 to-teal-600/40",
+    tags:     (row.article_tags ?? []).map((t: any) => t.tags?.name).filter(Boolean),
+    content:  (row.article_paragraphs ?? [])
+                .sort((a: any, b: any) => a.position - b.position)
+                .map((p: any) => p.body),
+  }));
 }
 
-export function getRelated(slug: string, limit = 3) {
-  const current = getArticleBySlug(slug);
+export async function fetchArticleBySlug(slug: string): Promise<Article | null> {
+  if (!supabase) return null;
+
+  const { data, error } = await supabase
+    .from("articles")
+    .select(`
+      slug,
+      title,
+      excerpt,
+      read_time,
+      gradient,
+      published_at,
+      article_categories ( name ),
+      authors ( name ),
+      article_paragraphs ( position, body ),
+      article_tags (
+        tags ( name )
+      )
+    `)
+    .eq("slug", slug)
+    .single();
+
+  if (error || !data) return null;
+
+  return {
+    slug:     data.slug,
+    title:    data.title,
+    excerpt:  data.excerpt,
+    category: (data as any).article_categories?.name as Category,
+    readTime: data.read_time,
+    author:   (data as any).authors?.name ?? "",
+    date:     formatDate(data.published_at),
+    gradient: data.gradient ?? "from-emerald-400/40 to-teal-600/40",
+    tags:     ((data as any).article_tags ?? []).map((t: any) => t.tags?.name).filter(Boolean),
+    content:  ((data as any).article_paragraphs ?? [])
+                .sort((a: any, b: any) => a.position - b.position)
+                .map((p: any) => p.body),
+  };
+}
+
+export async function fetchRelated(slug: string, limit = 3): Promise<Article[]> {
+  if (!supabase) return [];
+
+  // Сначала получаем category_id текущей статьи
+  const { data: current } = await supabase
+    .from("articles")
+    .select("category_id")
+    .eq("slug", slug)
+    .single();
+
   if (!current) return [];
-  return articles
-    .filter((a) => a.slug !== slug && a.category === current.category)
-    .slice(0, limit);
+
+  const { data, error } = await supabase
+    .from("articles")
+    .select(`
+      slug, title, excerpt, read_time, gradient, published_at,
+      article_categories ( name ),
+      authors ( name ),
+      article_tags ( tags ( name ) )
+    `)
+    .eq("category_id", current.category_id)
+    .neq("slug", slug)
+    .limit(limit);
+
+  if (error || !data) return [];
+
+  return data.map((row: any) => ({
+    slug:     row.slug,
+    title:    row.title,
+    excerpt:  row.excerpt,
+    category: row.article_categories?.name as Category,
+    readTime: row.read_time,
+    author:   row.authors?.name ?? "",
+    date:     formatDate(row.published_at),
+    gradient: row.gradient ?? "from-emerald-400/40 to-teal-600/40",
+    tags:     (row.article_tags ?? []).map((t: any) => t.tags?.name).filter(Boolean),
+    content:  [],
+  }));
+}
+
+// ─── Helpers ─────────────────────────────────────────────────
+
+function formatDate(iso: string): string {
+  if (!iso) return "";
+  const d = new Date(iso);
+  return d.toLocaleDateString("ru-RU", { day: "numeric", month: "long", year: "numeric" });
+}
+
+// Алиасы для совместимости с роутами
+export const fetchRelatedArticles = fetchRelated;
+
+export async function fetchCategories(): Promise<string[]> {
+  if (!supabase) return categories;
+
+  const { data, error } = await supabase
+    .from("article_categories")
+    .select("name")
+    .order("name");
+
+  if (error || !data) return categories;
+
+  return data.map((c: any) => c.name);
 }
