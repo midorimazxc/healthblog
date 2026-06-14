@@ -12,9 +12,14 @@ export function ArticleCard({ article, index = 0 }: { article: Article; index?: 
       className="glass glass-hover animate-fade-up group relative overflow-hidden rounded-[20px] p-5"
       style={{ animationDelay: `${index * 60}ms` }}
     >
-      <div
-        className={`mb-4 h-40 rounded-2xl bg-gradient-to-br ${article.gradient} relative overflow-hidden`}
-      >
+      <div className={`mb-4 h-40 rounded-2xl relative overflow-hidden ${!article.imageUrl ? `bg-gradient-to-br ${article.gradient}` : ""}`}>
+        {article.imageUrl && (
+          <img
+            src={article.imageUrl}
+            alt={article.title}
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
         <span className="absolute left-3 top-3 rounded-full bg-white/15 px-3 py-1 text-xs text-slate-900 backdrop-blur-md ring-1 ring-white/20">
           {article.category}

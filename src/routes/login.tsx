@@ -1,6 +1,7 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
 import { Mail, Lock, LogIn } from "lucide-react";
+import { supabase } from "@/lib/supabase";
 
 export const Route = createFileRoute("/login")({
   head: () => ({
@@ -13,12 +14,26 @@ export const Route = createFileRoute("/login")({
 });
 
 function LoginPage() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  const onSubmit = (e: FormEvent) => {
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    // UI only — no auth logic yet
+    if (!supabase) return;
+    setError(null);
+    setLoading(true);
+
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+
+    if (error) {
+      setError("Неверный email или пароль");
+    } else {
+      navigate({ to: "/" });
+    }
+    setLoading(false);
   };
 
   return (
@@ -37,11 +52,8 @@ function LoginPage() {
               <span className="flex items-center gap-2 text-sm text-slate-700">
                 <Mail className="h-4 w-4" /> Email
               </span>
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+              <input type="email" required value={email}
+                onChange={e => setEmail(e.target.value)}
                 placeholder="you@example.com"
                 className="glass mt-2 w-full rounded-xl px-4 py-2.5 text-slate-900 placeholder:text-slate-900/40 outline-none focus:ring-2 focus:ring-[#22c55e]/50"
               />
@@ -51,18 +63,24 @@ function LoginPage() {
               <span className="flex items-center gap-2 text-sm text-slate-700">
                 <Lock className="h-4 w-4" /> Пароль
               </span>
-              <input
-                type="password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+              <input type="password" required value={password}
+                onChange={e => setPassword(e.target.value)}
                 placeholder="••••••••"
                 className="glass mt-2 w-full rounded-xl px-4 py-2.5 text-slate-900 placeholder:text-slate-900/40 outline-none focus:ring-2 focus:ring-[#22c55e]/50"
               />
             </label>
+            
+            <div className="flex justify-end">
+              <Link to="/forgot-password" className="text-xs text-[#15803d] hover:underline">
+                Забыли пароль?
+              </Link>
+            </div>
 
-            <button type="submit" className="btn-glass w-full rounded-full px-5 py-2.5 text-sm font-medium">
-              Войти
+            {error && <p className="text-sm text-red-500">{error}</p>}
+
+            <button type="submit" disabled={loading}
+              className="btn-glass w-full rounded-full px-5 py-2.5 text-sm font-medium disabled:opacity-50">
+              {loading ? "Входим..." : "Войти"}
             </button>
           </form>
 

@@ -22,6 +22,8 @@ function Home() {
   const [articles, setArticles] = useState<Article[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
+  const PAGE_SIZE = 6;
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     Promise.all([fetchArticles(), fetchCategories()]).then(([arts, cats]) => {
@@ -43,6 +45,8 @@ function Home() {
       return matchesQ && matchesCat;
     });
   }, [query, active, articles]);
+  const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+  const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   return (
     <div className="space-y-14">
@@ -77,7 +81,9 @@ function Home() {
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h2 className="text-2xl sm:text-3xl font-semibold text-slate-900">Свежие статьи</h2>
-            <p className="text-sm text-on-glass">Найдено: {filtered.length}</p>
+            <p className="text-sm text-on-glass">
+       Найдено: {filtered.length} · стр. {page} из {totalPages || 1}
+</p>
           </div>
           <div className="sm:w-96">
             <SearchBar value={query} onChange={setQuery} />
@@ -88,7 +94,7 @@ function Home() {
           {(["Все", ...categories]).map((cat) => (
             <button
               key={cat}
-              onClick={() => setActive(cat)}
+              onClick={() => { setActive(cat); setPage(1); }}
               className={`rounded-full px-4 py-1.5 text-sm transition-all ${
                 active === cat
                   ? "bg-[#22c55e]/30 text-slate-900 ring-1 ring-[#22c55e]/50 shadow-[0_0_20px_rgba(34,197,94,0.3)]"
@@ -112,11 +118,44 @@ function Home() {
           </div>
         ) : (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {filtered.map((a, i) => (
+            {paginated.map((a, i) => (
               <ArticleCard key={a.slug} article={a} index={i} />
             ))}
           </div>
         )}
+        {totalPages > 1 && (
+  <div className="flex items-center justify-center gap-2 pt-4">
+    <button
+      onClick={() => setPage((p) => Math.max(1, p - 1))}
+      disabled={page === 1}
+      className="glass rounded-full px-4 py-1.5 text-sm text-slate-700 disabled:opacity-40 hover:text-slate-900 transition"
+    >
+      ← Назад
+    </button>
+
+    {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
+      <button
+        key={n}
+        onClick={() => setPage(n)}
+        className={`rounded-full px-3.5 py-1.5 text-sm transition-all ${
+          n === page
+            ? "bg-[#22c55e]/30 text-slate-900 ring-1 ring-[#22c55e]/50"
+            : "glass text-slate-700 hover:text-slate-900"
+        }`}
+      >
+        {n}
+      </button>
+    ))}
+
+    <button
+      onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+      disabled={page === totalPages}
+      className="glass rounded-full px-4 py-1.5 text-sm text-slate-700 disabled:opacity-40 hover:text-slate-900 transition"
+    >
+      Вперёд →
+    </button>
+  </div>
+)}
       </section>
 
       <Newsletter />

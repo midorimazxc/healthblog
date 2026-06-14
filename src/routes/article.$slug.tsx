@@ -10,9 +10,7 @@ export const Route = createFileRoute("/article/$slug")({
   notFoundComponent: () => (
     <div className="glass-strong rounded-[28px] p-10 text-center">
       <h1 className="text-2xl font-semibold text-slate-900">Статья не найдена</h1>
-      <Link to="/" className="btn-glass mt-6 inline-flex rounded-full px-5 py-2 text-sm">
-        На главную
-      </Link>
+      <Link to="/" className="btn-glass mt-6 inline-flex rounded-full px-5 py-2 text-sm">На главную</Link>
     </div>
   ),
   loader: async ({ params }) => {
@@ -25,6 +23,12 @@ export const Route = createFileRoute("/article/$slug")({
       ? [
           { title: `${loaderData.article.title} — HealthBlog` },
           { name: "description", content: loaderData.article.excerpt },
+          { property: "og:title", content: loaderData.article.title },
+          { property: "og:description", content: loaderData.article.excerpt },
+          { property: "og:type", content: "article" },
+          ...(loaderData.article.imageUrl
+            ? [{ property: "og:image", content: loaderData.article.imageUrl }]
+            : []),
         ]
       : [],
   }),
@@ -39,6 +43,15 @@ function ArticlePage() {
   useEffect(() => {
     fetchRelatedArticles(article.slug).then(setRelated);
   }, [article.slug]);
+
+  const share = () => {
+    if (navigator.share) {
+      navigator.share({ title: article.title, url: window.location.href });
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      alert("Ссылка скопирована!");
+    }
+  };
 
   return (
     <article className="space-y-10">
@@ -60,45 +73,38 @@ function ArticlePage() {
           {article.title}
         </h1>
         <p className="mt-4 text-lg text-on-glass">{article.excerpt}</p>
-
         <div className="mt-6 flex items-center justify-between">
           <p className="text-sm text-slate-700">Автор · {article.author}</p>
           <div className="flex gap-2">
             <button
               onClick={() => toggle(article.slug)}
-              className={`glass rounded-full p-2.5 transition ${
-                saved ? "bg-[#22c55e]/25 ring-1 ring-[#22c55e]/40 text-[#15803d]" : "text-slate-700"
-              }`}
+              className={`glass rounded-full p-2.5 transition ${saved ? "bg-[#22c55e]/25 ring-1 ring-[#22c55e]/40 text-[#15803d]" : "text-slate-700"}`}
               aria-label="Сохранить"
             >
               <Bookmark className="h-4 w-4" fill={saved ? "currentColor" : "none"} />
             </button>
-            <button className="glass rounded-full p-2.5 text-slate-700" aria-label="Поделиться">
+            <button onClick={share} className="glass rounded-full p-2.5 text-slate-700" aria-label="Поделиться">
               <Share2 className="h-4 w-4" />
             </button>
           </div>
         </div>
       </header>
 
-      <div
-        className={`h-64 sm:h-80 rounded-[28px] bg-gradient-to-br ${article.gradient} relative overflow-hidden`}
-      >
+      {/* Фото или градиент */}
+      <div className={`h-64 sm:h-80 rounded-[28px] relative overflow-hidden ${!article.imageUrl ? `bg-gradient-to-br ${article.gradient}` : ""}`}>
+        {article.imageUrl
+          ? <img src={article.imageUrl} alt={article.title} className="h-full w-full object-cover" />
+          : null}
         <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
       </div>
 
       <div className="glass rounded-[28px] p-8 sm:p-12 space-y-5">
         {article.content.map((p, i) => (
-          <p key={i} className="text-lg leading-relaxed text-slate-800">
-            {p}
-          </p>
+          <p key={i} className="text-lg leading-relaxed text-slate-800">{p}</p>
         ))}
-
         <div className="flex flex-wrap gap-2 pt-4">
           {article.tags.map((tag) => (
-            <span
-              key={tag}
-              className="rounded-full bg-white/10 px-3 py-1 text-xs text-slate-700 ring-1 ring-white/15"
-            >
+            <span key={tag} className="rounded-full bg-white/10 px-3 py-1 text-xs text-slate-700 ring-1 ring-white/15">
               #{tag}
             </span>
           ))}
@@ -109,9 +115,7 @@ function ArticlePage() {
         <section>
           <h2 className="mb-5 text-2xl font-semibold text-slate-900">Похожие материалы</h2>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {related.map((a, i) => (
-              <ArticleCard key={a.slug} article={a} index={i} />
-            ))}
+            {related.map((a, i) => <ArticleCard key={a.slug} article={a} index={i} />)}
           </div>
         </section>
       )}
